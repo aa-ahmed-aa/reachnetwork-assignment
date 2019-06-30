@@ -41,7 +41,7 @@ class UserController extends ApiController
      */
     public function show(User $user)
     {
-        //
+        return json_decode($user);
     }
 
 }

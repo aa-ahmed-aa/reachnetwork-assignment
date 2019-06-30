@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -12,6 +13,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->delete();
-        factory(App\User::class, 35)->create();
+        foreach (range(1,35) as $index)
+        {
+            factory(App\User::class)->create(['id'=>$index]);
+        }
     }
 }
