@@ -25,8 +25,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(UserRepository::resetWeekly())->weekly(); //reset the week counter
-        $schedule->call(UserRepository::resetMonthly())->monthly(); //reset the month counter
+        //reset the week counter
+        $schedule->call(function () {
+            UserRepository::resetWeekly();
+        })->weekly();
+
+        //reset the month counter
+        $schedule->call(function () {
+            UserRepository::resetMonthly();
+        })->monthly();
     }
 
     /**
