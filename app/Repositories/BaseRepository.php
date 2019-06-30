@@ -37,9 +37,9 @@ abstract class BaseRepository implements RepositoryContract
      * @param $itemId
      * @return Model
      */
-    public function getItemByID($itemId)
+    public function getItemByID($userId)
     {
-        return $this->model->find($itemId);
+        return $this->model->where( '_id', '=', $userId )->get()->first();
     }
 
 
@@ -52,6 +52,16 @@ abstract class BaseRepository implements RepositoryContract
         return $this->model->all();
     }
 
+    /**
+     * save Increment weekly and monthly visits
+     * @param $user
+     * @return mixed
+     */
+    public function saveUser($user)
+    {
+        $user->save();
+        return $user;
+    }
 
     /**
      * @return array $items

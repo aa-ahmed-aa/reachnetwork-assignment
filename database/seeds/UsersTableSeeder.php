@@ -12,10 +12,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->delete();
-        foreach (range(1,35) as $index)
-        {
-            factory(App\User::class)->create(['id'=>$index]);
-        }
+        factory(App\User::class, 35)->create();
     }
 }

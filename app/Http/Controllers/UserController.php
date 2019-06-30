@@ -3,45 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
-use App\User;
-
+use App\Managers\UserManager;
 
 class UserController extends ApiController
 {
 
-    protected $userRepository;
+    protected $userManager;
 
     /**
      * UserController constructor injecting the repository instance.
-     * @param $userRepository
      */
     function __construct()
     {
-        $this->userRepository = new UserRepository();
+        $this->userManager = new UserManager();
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function index()
     {
-        $users = $this->userRepository->paginateAllItem();
-        return json_decode($users, true);
+        $users = $this->userManager->getAllUsersByPage();
+
+        return $this->setStatusCode(200)
+            ->respond(json_decode($users, true));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param $userId
+     * @return mixed
      */
-    public function show(User $user)
+    public function show($userId)
     {
-        return json_decode($user);
+        $userAfterCountVisit = $this->userManager->incrementUserVisits($userId);
+
+        return $this->setStatusCode(200)
+            ->respond($userAfterCountVisit);
     }
 
 }

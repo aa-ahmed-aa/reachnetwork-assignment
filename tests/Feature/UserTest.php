@@ -8,13 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     /** @test */
     public function getUserById()
     {
         $user = factory(User::class)->create();
-
+//        return $user;
         $this->get('/api/v1/users/'.$user->id)
             ->assertStatus(200);
     }
