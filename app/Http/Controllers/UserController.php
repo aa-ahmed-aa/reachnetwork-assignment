@@ -25,7 +25,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $users = $this->userManager->incrementAllUsersViews();
+        $this->userManager->incrementAllUsersViews();
 
         $users = $this->userManager->getAllUsersByPage();
 
