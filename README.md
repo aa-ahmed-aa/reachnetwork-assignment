@@ -16,3 +16,9 @@ create 2 APIs for view all users and getting user details.
 
 #### Performance test
 * seed the database tables with 50K users and 1M views and benchmark the 2 APIs average response time.
+
+
+
+#####Take care
+-install php-mongodb using `sudo apt-get install php-mongodb`
+-for mongo configuration in .env file do not forget to set the port to your local mongodb port(Default:27017) also by default username and password are empty
