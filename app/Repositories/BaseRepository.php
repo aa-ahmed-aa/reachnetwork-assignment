@@ -47,7 +47,7 @@ abstract class BaseRepository implements RepositoryContract
      * @param null $fields
      * @return array
      */
-    public function getAllItems( $fields = null )
+    public function getAllItems( $fields = array() )
     {
         return $this->model->all($fields);
     }
