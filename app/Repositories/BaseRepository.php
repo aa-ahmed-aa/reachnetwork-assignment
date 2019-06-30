@@ -37,9 +37,9 @@ abstract class BaseRepository implements RepositoryContract
      * @param $itemId
      * @return Model
      */
-    public function getItemByID($userId)
+    public function getItemByID($itemID)
     {
-        return $this->model->where( '_id', '=', $userId )->get()->first();
+        return $this->model->where( '_id', '=', $itemID )->get()->first();
     }
 
 
@@ -54,13 +54,13 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * save Increment weekly and monthly visits
-     * @param $user
+     * @param $item
      * @return mixed
      */
-    public function saveUser($user)
+    public function saveItem($item)
     {
-        $user->save();
-        return $user;
+        $item->save();
+        return $item;
     }
 
     /**
@@ -68,7 +68,8 @@ abstract class BaseRepository implements RepositoryContract
      */
     public function paginateAllItem()
     {
-        $usersPage = $this->model->paginate(15);
-        return $json  = json_encode($usersPage);;
+        $itemsPage = $this->model->orderBy('weekly_visits_count', 'desc')->paginate(15);
+        $users = json_encode($itemsPage);
+        return json_decode($users, true);
     }
 }

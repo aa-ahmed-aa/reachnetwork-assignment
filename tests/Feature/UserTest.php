@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -50,6 +51,7 @@ class UserTest extends TestCase
     /** @test */
     public function getPopularUsersOrderedByWeeklyVisits()
     {
+        Schema::dropIfExists('users');
         $poorGuy = factory(User::class)->create();
         $popularGuy = factory(User::class)->create();
         $normalGuy = factory(User::class)->create();

@@ -30,7 +30,7 @@ class UserController extends ApiController
         $users = $this->userManager->getAllUsersByPage();
 
         return $this->setStatusCode(200)
-            ->respond(json_decode($users, true));
+            ->respond($users);
     }
 
     /**

@@ -34,13 +34,20 @@ class UserManager extends BaseManager
     {
         $users = $this->userRepository->paginateAllItem();
 
-        return $users;
+        $response = [];
+
+        foreach($users['data'] as $index => $user)
+        {
+            $response[] = $this->wrap($user);
+        }
+
+        return $response;
     }
 
     /**
      * Get Single User
      * @param $userId
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
      */
     public function getUserById($userId)
     {
@@ -61,13 +68,12 @@ class UserManager extends BaseManager
         $user->weekly_visits_count = (int)$user->weekly_visits_count + 1;
         $user->monthly_visits_count = (int)$user->monthly_visits_count + 1;
 
-        $user = $this->userRepository->saveUser($user);
+        $user = $this->userRepository->saveItem($user);
         return $user;
     }
 
     /**
      * increment weekly and monthly visits by the user with id $userId
-     * @param $userId
      * @return mixed saved user data
      */
     public function incrementAllUsersViews()
@@ -81,7 +87,7 @@ class UserManager extends BaseManager
         {
             $user->weekly_views_count = (int)$user->weekly_views_count + 1;
             $user->monthly_views_count = (int)$user->monthly_views_count + 1;
-            $usersAfterIncrement[] = $this->userRepository->saveUser($user);
+            $usersAfterIncrement[] = $this->userRepository->saveItem($user);
         }
 
         return $usersAfterIncrement;
