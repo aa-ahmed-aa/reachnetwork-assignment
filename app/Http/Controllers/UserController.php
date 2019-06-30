@@ -41,7 +41,16 @@ class UserController extends ApiController
      */
     public function show($userId)
     {
-        $userAfterCountVisit = $this->userManager->incrementUserVisits($userId);
+        $user = $this->userManager->getUserById($userId);
+
+        if( ! $user )
+        {
+            return $this->setStatusCode(404)
+                ->respondWithError( "Not Found." );
+        }
+
+        $userAfterCountVisit = $this->userManager->incrementUserVisits($user);
+
 
         return $this->setStatusCode(200)
             ->respond($userAfterCountVisit);

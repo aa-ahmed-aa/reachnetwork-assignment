@@ -57,14 +57,11 @@ class UserManager extends BaseManager
 
     /**
      * increment weekly and monthly visits by the user with id $userId
-     * @param $userId
+     * @param $user
      * @return mixed saved user data
      */
-    public function incrementUserVisits($userId)
+    public function incrementUserVisits($user)
     {
-
-        $user = $this->userRepository->getItemByID($userId);
-
         $user->weekly_visits_count = (int)$user->weekly_visits_count + 1;
         $user->monthly_visits_count = (int)$user->monthly_visits_count + 1;
 
