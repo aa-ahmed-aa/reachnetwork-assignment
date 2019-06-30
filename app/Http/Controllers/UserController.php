@@ -25,6 +25,8 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $users = $this->userManager->incrementAllUsersViews();
+
         $users = $this->userManager->getAllUsersByPage();
 
         return $this->setStatusCode(200)

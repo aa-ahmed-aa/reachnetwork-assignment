@@ -14,7 +14,7 @@ class UserTest extends TestCase
     public function getUserById()
     {
         $user = factory(User::class)->create();
-//        return $user;
+
         $this->get('/api/v1/users/'.$user->id)
             ->assertStatus(200);
     }

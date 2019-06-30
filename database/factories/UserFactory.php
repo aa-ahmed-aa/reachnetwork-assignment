@@ -24,6 +24,8 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'weekly_visits_count' => 0,
         'monthly_visits_count' => 0,
+        'weekly_views_count' => 0,
+        'monthly_views_count' => 0,
         'remember_token' => Str::random(10),
     ];
 });

@@ -44,12 +44,12 @@ abstract class BaseRepository implements RepositoryContract
 
 
     /**
-     * Get All Entities at table
-     * @return array $items
+     * @param null $fields
+     * @return array
      */
-    public function getAllItems()
+    public function getAllItems( $fields = null )
     {
-        return $this->model->all();
+        return $this->model->all($fields);
     }
 
     /**
