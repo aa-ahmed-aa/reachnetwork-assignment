@@ -12,6 +12,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 35)->create();
+        $values = [
+            'weekly_visits_count'  => 1000000,
+            'monthly_visits_count' => 1000000,
+            'weekly_views_count'   => 1000000,
+            'monthly_views_count'  => 1000000,
+        ];
+
+        factory(App\User::class, 50000)->create($values);
     }
 }

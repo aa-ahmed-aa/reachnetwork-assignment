@@ -40,4 +40,13 @@ class UserRepository extends BaseRepository
     {
         $user->$field = 0;
     }
+
+    public function saveUserFromArray($user)
+    {
+        $oldUser = $this->model->where( '_id', '=', $user['_id'] )->get()->first();
+        $oldUser->weekly_views_count = $user['weekly_views_count'];
+        $oldUser->monthly_views_count = $user['monthly_views_count'];
+        $oldUser->save();
+        return $oldUser;
+    }
 }

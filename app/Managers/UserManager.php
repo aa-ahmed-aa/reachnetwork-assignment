@@ -1,7 +1,9 @@
 <?php
 namespace App\Managers;
 
+use App\Jobs\IncrementUsersViews;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Cache;
 
 class UserManager extends BaseManager
 {
@@ -76,7 +78,7 @@ class UserManager extends BaseManager
     public function incrementAllUsersViews()
     {
 
-        $users = $this->userRepository->getAllItems(['_id','weekly_views_count','monthly_views_count']);
+        $users = $this->userRepository->getAllItems();
 
         $usersAfterIncrement = [];
 
@@ -85,6 +87,30 @@ class UserManager extends BaseManager
             $user->weekly_views_count = (int)$user->weekly_views_count + 1;
             $user->monthly_views_count = (int)$user->monthly_views_count + 1;
             $usersAfterIncrement[] = $this->userRepository->saveItem($user);
+        }
+
+        return $usersAfterIncrement;
+    }
+
+    /**
+     * increment Users in page
+     */
+    public function incrementUsersInPage()
+    {
+        $users = $this->userRepository->paginateAllItem();
+
+        $usersAfterIncrement = [];
+
+        foreach($users as $user)
+        {
+            $user["weekly_views_count"] = (int)$user["weekly_views_count"] + 1;
+            $user["monthly_views_count"] = (int)$user["monthly_views_count"] + 1;
+
+            $newUser = $this->userRepository->saveUserFromArray($user);
+
+            Cache::put('item_'. $newUser->_id .'_page_'.$_GET['page'], $newUser);
+
+            $usersAfterIncrement[] = $this->wrap($newUser);
         }
 
         return $usersAfterIncrement;

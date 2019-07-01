@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\RepositoryContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 
 abstract class BaseRepository implements RepositoryContract
@@ -34,7 +35,7 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Get Single Entity By id
-     * @param $itemId
+     * @param $itemID
      * @return Model
      */
     public function getItemByID($itemID)
@@ -44,7 +45,7 @@ abstract class BaseRepository implements RepositoryContract
 
 
     /**
-     * @param null $fields
+     * @param array $fields
      * @return array
      */
     public function getAllItems( $fields = array() )
@@ -68,8 +69,19 @@ abstract class BaseRepository implements RepositoryContract
      */
     public function paginateAllItem()
     {
+        $_GET['page'] = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
         $itemsPage = $this->model->orderBy('weekly_visits_count', 'desc')->paginate(15);
-        $users = json_encode($itemsPage);
-        return json_decode($users, true);
+
+        $cachedItems = [];
+        foreach($itemsPage as $index => $item)
+        {
+            $cachedItems[] = Cache::remember('item_'. $item->_id .'_page_'.$_GET['page'], 999999, function () use ($item) {
+                return $item;
+            });
+        }
+
+        $items = json_encode($cachedItems);
+        return json_decode($items, true);
     }
 }
