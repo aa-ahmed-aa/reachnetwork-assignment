@@ -26,6 +26,8 @@ $factory->define(User::class, function (Faker $faker) {
         'monthly_visits_count' => 0,
         'weekly_views_count' => 0,
         'monthly_views_count' => 0,
+        'total_visits' => 0,
+        'total_views' => 0,
         'remember_token' => Str::random(10),
     ];
 });

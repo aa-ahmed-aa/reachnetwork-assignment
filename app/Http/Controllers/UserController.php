@@ -25,11 +25,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $start = microtime(true);
-
         $users = $this->userManager->incrementUsersInPage();
-
-        \Log::info("with Cache and Chancing : ". ( microtime(true) - $start ) * 1000 . " MS");
 
         return $this->setStatusCode(200)
             ->respond($users);

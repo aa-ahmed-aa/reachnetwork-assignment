@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->bigInteger('monthly_visits_count')->default(0);
             $table->bigInteger('weekly_views_count')->default(0);
             $table->bigInteger('monthly_views_count')->default(0);
+            $table->bigInteger('total_visits')->default(0);
+            $table->bigInteger('total_views')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
