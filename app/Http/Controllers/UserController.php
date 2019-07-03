@@ -49,7 +49,6 @@ class UserController extends ApiController
 
         $userAfterCountVisit = $this->userManager->incrementUserVisits($user);
 
-
         return $this->setStatusCode(200)
             ->respond($userAfterCountVisit);
     }
